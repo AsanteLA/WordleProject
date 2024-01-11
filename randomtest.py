@@ -15,3 +15,27 @@ print(charlist)
 
 
 # Sekected_Word = random.choice(FIVE_LETTER_WORDS)
+
+# Breaking down a word into a list of characters
+charlist = list(random_word)
+
+# Creating a Wordle window
+wordle_window = WordleGWindow()
+
+# Revealing the chosen random word
+print('Random Word:', random_word)
+
+# Printing character list in array format
+print(charlist)
+
+# Loop to set each character in the Wordle window horizontally
+for col, char in enumerate(charlist):
+    # Set the character in row 0 (you can adjust the row as needed)
+    wordle_window.set_square_letter(0, col, char)
+
+# Wait for user interaction (optional)
+input("Press Enter to exit")
+
+
+
+# Sekected_Word = random.choice(FIVE_LETTER_WORDS)
