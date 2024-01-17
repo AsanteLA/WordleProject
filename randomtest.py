@@ -36,6 +36,10 @@ for col, char in enumerate(charlist):
 # Wait for user interaction (optional)
 input("Press Enter to exit")
 
-
+# Accessing and constructing the first guess
+guess = ''
+for row in range(N_ROWS):
+    for col in range(N_COLS):
+        guess += wordle_window.get_square_letter(row, col) 
 
 # Sekected_Word = random.choice(FIVE_LETTER_WORDS)
