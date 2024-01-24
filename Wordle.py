@@ -6,61 +6,42 @@ BE SURE TO UPDATE THIS COMMENT WHEN YOU WRITE THE CODE.
 """
 
 import random
-
 from WordleDictionary import FIVE_LETTER_WORDS
-from WordleGraphics import WordleGWindow, N_COLS, N_ROWS
+from WordleGraphics import WordleGWindow, N_COLS, N_ROWS, PRESENT_COLOR, CORRECT_COLOR, UNKNOWN_COLOR, MISSING_COLOR
 
-def wordle(gw, guess_lower):
-    def enter_action(FIVE_LETTER_WORDS, guess_lower):
-        if guess_lower in FIVE_LETTER_WORDS:
-            msg = "Good try! This is a word!"
-            gw.show_message(msg, color="Black")
+def wordle():
+
+    def enter_action(s, random_word):
+        gw.show_message(random_word)
+        
+        if s.lower() in FIVE_LETTER_WORDS:
+            for col, char in enumerate(random_word):
+                if s[col].lower() == char.lower():
+                    gw.set_square_color(gw.get_current_row(), col, CORRECT_COLOR)
+                    gw.set_key_color(s[col].upper(), CORRECT_COLOR)
+                elif s[col].lower() in random_word.lower():
+                    gw.set_square_color(gw.get_current_row(), col, PRESENT_COLOR)
+                    gw.set_key_color(s[col].upper(), PRESENT_COLOR)
+                else:
+                    gw.set_square_color(gw.get_current_row(), col, MISSING_COLOR)
+                    gw.set_key_color(s[col].upper(), MISSING_COLOR)
+                    
+            if s.lower() == random_word.lower():
+                gw.show_message("You win!")
+                gw.close()
+                
+            next_row = gw.get_current_row() + 1
+            if next_row < N_ROWS:
+                gw.set_current_row(next_row)
         else:
-            msg = "Not in word list"
-            gw.show_message(msg, color="Black")
+            gw.show_message("Not in word list!")    
     
+    random_word = random.choice(FIVE_LETTER_WORDS)       
+
     gw = WordleGWindow()
-    gw.add_enter_listener(enter_action)
+    gw.add_enter_listener(lambda s: enter_action(s, random_word))
 
 # Startup code
 
 if __name__ == "__main__":
-    #Selectong the random word
-    random_word = random.choice(FIVE_LETTER_WORDS)
-
-    #Breaking down a word into a list of characters
-    charlist = list(random_word)
-
-    #Revelaing the cosen random word
-    print('Random Word:', random_word)
-
-    #Printing chatracterr list in array format
-    print(charlist)
-
-    # Breaking down a word into a list of characters
-    charlist = list(random_word)
-
-    # Revealing the chosen random word
-    print('Random Word:', random_word)
-
-    # Printing character list in array format
-    print(charlist)
-
-    wordle_window = WordleGWindow()
-    # Loop to set each character in the Wordle window horizontally
-    for col, ch in enumerate(charlist):
-        # Set the character in row 0 (you can adjust the row as needed)
-        wordle_window.set_square_letter(0, col, ch)
-
-    # Wait for user interaction (optional)
-    input("Press Enter to exit")
-    guess = ''
-    for row in range(N_ROWS):
-        for col in range(N_COLS):
-            guess += wordle_window.get_square_letter(row, col) 
-
-    guess_lower = guess.lower()
-
-    guess_lower = guess_lower.strip()
-    
-    wordle(wordle_window, guess_lower)
+    wordle()
