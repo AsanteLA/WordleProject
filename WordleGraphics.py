@@ -183,7 +183,17 @@ class WordleGWindow:
         atexit.register(start_event_loop)
 
         self._colorblind_button = tkinter.Button(root, text="Colorblind Mode", command=self.toggle_color_mode)
+        self._hardmode_button = tkinter.Button(root, text="Hard Mode", command=self.toggle_hard_mode)
+        self._hardmode_button.pack()
         self._colorblind_button.pack()
+        self.hardmode_list = []
+
+    def toggle_hard_mode(self):
+        #Toggle between normal mode and hard mode."""
+        self._hard_mode = not self._hard_mode
+        
+    
+        
     def toggle_color_mode(self):
         #Toggle between normal color mode and colorblind mode."""
         self._colorblind_mode = not self._colorblind_mode

@@ -16,25 +16,37 @@ def wordle():
             print(s.lower())
             print(random_word)
             for col, char in enumerate(random_word):
-                if s[col].lower() == char.lower():
+                if not any (char in s for char in gw.hardmode_list):
+                    print("Must use guess letters!")
+                    break
+                if s[col].lower() == char.lower() and s[col].lower() in gw.hardmode_list:
                     print(f"Colorblind mode: {gw._colorblind_mode}")  # Print colorblind mode status
                     if gw._colorblind_mode:
                         gw.set_square_color(gw.get_current_row(), col, CORRECT_COLOR_BLD)
                         gw.set_key_color(s[col].upper(), CORRECT_COLOR_BLD)
                         print("Colorblind mode1: Setting square color to CORRECT_COLOR")
+                        gw.hardmode_list.append(s[col].lower())
+
                     else:
                         gw.set_square_color(gw.get_current_row(), col, CORRECT_COLOR)
                         print("Colorblind mode2: Setting square color to CORRECT_COLOR")
                         gw.set_key_color(s[col].upper(), CORRECT_COLOR)
+                        gw.hardmode_list.append(s[col].lower())
+
                 elif s[col].lower() in random_word.lower():
                     if gw._colorblind_mode:
                         gw.set_square_color(gw.get_current_row(), col, PRESENT_COLOR_BLD)
                         gw.set_key_color(s[col].upper(), PRESENT_COLOR_BLD)
                         print("Colorblind mode3: Setting square color to PRESENT_COLOR")
+                        gw.hardmode_list.append(s[col].lower())
+
                     else:
                         gw.set_square_color(gw.get_current_row(), col, PRESENT_COLOR)
                         print("Colorblind mode4: Setting square color to PRESENT_COLOR")
                         gw.set_key_color(s[col].upper(), PRESENT_COLOR)
+                        gw.hardmode_list.append(s[col].lower())
+                        print(gw.hardmode_list)
+
                 else:
                     if gw._colorblind_mode:
                         gw.set_square_color(gw.get_current_row(), col, MISSING_COLOR_BLD)
@@ -63,3 +75,5 @@ def wordle():
     # Startup code
 if __name__ == "__main__":
     wordle()
+    
+    
